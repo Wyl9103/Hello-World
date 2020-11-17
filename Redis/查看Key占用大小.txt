@@ -1,0 +1,22 @@
+$ pip install rdbtools python-lzf
+$ git clone https://github.com/sripathikrishnan/redis-rdb-tools
+$ cd redis-rdb-tools
+$ sudo python setup.py install
+
+接下来找到 redis 的 dump.rdb 位置
+
+首先定位到 redis.conf 位置
+
+$ whereis redis.conf
+redis: /etc/redis.conf
+
+$ cat /etc/redis.conf | grep dir | grep redis
+dir /var/lib/redis
+$ cat /etc/redis.conf | grep dump.rdb
+dbfilename dump.rdb
+
+综上，得知其路径为：/var/lib/redis/dump.rdb
+
+按内存值导出 csv
+
+$ rdb -c memory /var/lib/redis/dump.rdb > /tmp/redis.csv
